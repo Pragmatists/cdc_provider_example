@@ -1,6 +1,10 @@
 buildscript {
     ext {
         springBootVersion = '1.5.3.RELEASE'
+        okhttp_version = '3.4.2'
+        junit_version = '4.12'
+        assertj_version = '3.7.0'
+        pactjvm_version = '3.3.9'
     }
     repositories {
         mavenCentral()
@@ -18,6 +22,17 @@ version = '1.0.0-SNAPSHOT'
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
+sourceSets {
+    cdcVerification
+}
+
+task cdcVerification(type: Test) {
+    testClassesDir = sourceSets.cdcVerification.output.classesDir
+    classpath = sourceSets.cdcVerification.runtimeClasspath
+}
+
+check.dependsOn cdcVerification
+
 repositories {
     mavenCentral()
 }
@@ -25,6 +40,13 @@ repositories {
 dependencies {
     compile('org.springframework.boot:spring-boot-starter-web')
     compile 'com.squareup.okhttp3:okhttp:3.7.0'
+
     testCompile('org.springframework.boot:spring-boot-starter-test')
-    testCompile 'org.assertj:assertj-core:3.7.0'
+    testCompile "junit:junit:${junit_version}"
+
+    cdcVerificationCompile sourceSets.main.output
+    cdcVerificationCompile sourceSets.test.output
+    cdcVerificationCompile "org.springframework.boot:spring-boot-starter-web"
+    cdcVerificationCompile "com.squareup.okhttp3:okhttp:${okhttp_version}"
+    cdcVerificationCompile "au.com.dius:pact-jvm-provider-junit_2.11:${pactjvm_version}"
 }

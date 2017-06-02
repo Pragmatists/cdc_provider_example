@@ -31,7 +31,9 @@ public class BooksEndpoint {
     )
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
-    public List<BookJson> getAll() {
-        return booksRepository.all().stream().map(BookJson::new).collect(toList());
+    public BooksJson getAll() {
+        List<BookJson> books = booksRepository.all().stream().map(BookJson::new).collect(toList());
+        return new BooksJson(books);
     }
+
 }

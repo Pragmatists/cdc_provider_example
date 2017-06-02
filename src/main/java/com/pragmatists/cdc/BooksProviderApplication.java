@@ -9,6 +9,8 @@ import org.springframework.context.annotation.Import;
 public class BooksProviderApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(BooksProviderApplication.class, args);
+        SpringApplication app = new SpringApplication(BooksProviderApplication.class);
+        app.setAdditionalProfiles("live");
+        app.run(args);
     }
 }

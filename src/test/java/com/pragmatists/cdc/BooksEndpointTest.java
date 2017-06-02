@@ -10,6 +10,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.embedded.LocalServerPort;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
@@ -20,6 +21,7 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = BooksEndpointConfiguration.class, webEnvironment = RANDOM_PORT)
+@ActiveProfiles("live")
 public class BooksEndpointTest {
     @LocalServerPort
     private int port;
@@ -34,8 +36,12 @@ public class BooksEndpointTest {
 
         Response response = httpClient.newCall(request).execute();
 
-        List<Book> books = jsonMapper.transform(response, TypeFactory.defaultInstance().constructCollectionType(List.class, Book.class));
-        assertThat(books).hasSize(3).extracting("year").containsExactly(1983, 1986, 1987);
+        BooksResponse booksResponse = jsonMapper.transform(response, TypeFactory.defaultInstance().constructType(BooksResponse.class));
+        assertThat(booksResponse.books).hasSize(3).extracting("year").containsExactly(1983, 1986, 1987);
 
+    }
+
+    public static class BooksResponse {
+        List<Book> books;
     }
 }

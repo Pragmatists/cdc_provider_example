@@ -26,6 +26,12 @@ sourceSets {
     cdcVerification
 }
 
+eclipse {
+    classpath {
+        plusConfigurations.add configurations.cdcVerificationCompile
+    }
+}
+
 task cdcVerification(type: Test) {
     testClassesDir = sourceSets.cdcVerification.output.classesDir
     classpath = sourceSets.cdcVerification.runtimeClasspath

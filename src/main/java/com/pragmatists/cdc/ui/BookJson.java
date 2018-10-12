@@ -8,6 +8,9 @@ public class BookJson {
     public String title;
     public int year;
 
+    public BookJson() {
+    }
+
     public BookJson(Book book) {
         this.id = book.id;
         this.author = book.author;

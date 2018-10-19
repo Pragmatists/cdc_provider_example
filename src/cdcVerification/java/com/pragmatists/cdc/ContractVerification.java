@@ -46,6 +46,7 @@ public class ContractVerification {
     public void setupBooks() {
         BooksRepository booksRepository = applicationContext.getBean(BooksRepository.class);
         booksRepository.add(new Book("0765377063", "Liu Cixin", "The Three-Body Problem", 2007));
-        booksRepository.add(new Book("076537708X", "Liu Cixin", "The Dark Forest", 2008));
+        booksRepository.add(new Book("076537708X", "Liu Cixin", "The Dark Forest", 2009));
+        booksRepository.add(new Book("076537708X", "Liu Cixin", "The Dark Forest", 2009));
     }
 }

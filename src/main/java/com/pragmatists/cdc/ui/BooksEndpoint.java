@@ -4,10 +4,7 @@ import com.pragmatists.cdc.domain.BooksRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -34,6 +31,12 @@ public class BooksEndpoint {
     public BooksJson getAll() {
         List<BookJson> books = booksRepository.all().stream().map(BookJson::new).collect(toList());
         return new BooksJson(books);
+    }
+
+    @PostMapping("/books")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void addBook() {
+
     }
 
 }
